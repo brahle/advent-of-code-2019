@@ -49,15 +49,8 @@ let () =
     let start = 0 in
     printf "%d\n" (evaluate (replace (replace values 1 12) 2 2) start);
 
-    (* in
-    let values = parse line in
-    List.iter (fun s -> printf "%d\n" s) values; *)
-
-    flush stdout;                (* write on the underlying device now *)
-    close_in ic                  (* close the input channel *)
-  with e ->                      (* some unexpected exception occurs *)
-    close_in_noerr ic;           (* emergency closing *)
-    raise e                      (* exit with error: files are closed but
-                                    channels are not flushed *)
-
-  (* normal exit: all channels are flushed and closed *)
+    flush stdout;
+    close_in ic
+  with e ->
+    close_in_noerr ic;
+    raise e

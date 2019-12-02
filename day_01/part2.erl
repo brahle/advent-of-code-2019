@@ -18,6 +18,7 @@ parseAndSolveOne(X) ->
 solveOne(X) ->
     X div 3 - 2.
 
+% https://stackoverflow.com/questions/2475270/how-to-read-the-contents-of-a-file-in-erlang
 readlines(FileName) ->
     {ok, Data} = file:read_file(FileName),
     binary:split(Data, [<<"\n">>], [global]).
