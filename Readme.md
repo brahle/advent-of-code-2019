@@ -100,7 +100,7 @@ second result was a more relevant [thread from
 2001.](https://www.postgresql.org/message-id/00e401c12a4c$054036a0$279c10ac@INTERNAL)
 saying that it is not possible... I then had to turn to Google to learn about
 `UNNEST ... WITH ORDINALITY`. It was mostly smooth sailing and things went as
-planned from that point on. Oh, and I YOLO'd the fact that there were not going
+planned from that point on. Oh, and I YOLOed the fact that there were not going
 to be purely horizontal or purely vertical intersections.
 
 Thankfully for me, [part 2](day_03/45_part2.sql) just required fairly simple
