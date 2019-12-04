@@ -8,6 +8,7 @@ Table of contents:
 - [Advent of Code 2019](#advent-of-code-2019)
   - [Day 1 - Erlang](#day-1---erlang)
   - [Day 2 - OCaml](#day-2---ocaml)
+  - [Day 3 - SQL](#day-3---sql)
 
 ## Day 1 - Erlang
 
@@ -54,5 +55,53 @@ In [part deux](day_02/part2.ml) I for some reason thought I need to modify
 positions 0 and 1 for the "verb" and "noun". Thankfully, there were no solutions
 like that found so I was able to fix it fairly quickly.
 
-
 I **really** should read the problem statements more carefully.
+
+## Day 3 - SQL
+
+People who have done advent of code before have told me that the problems keep
+getting progressively harder. Since 25 is actually a fairly large number in
+terms of different programming languages, I want to add some non-traditional
+ones to the list as well. I think using SQL for a programming competition falls
+into that category so I was excited to find that I had an idea how to solve the
+day 3 problem using it. However, since I don't know what to expect in part 2, it
+had the potential to turn sour.
+
+The variant of SQL I decided to use was
+[PostgreSQL](https://en.wikipedia.org/wiki/PostgreSQL), which I had installed
+some time ago inside Ubuntu on Windows Subsystem for Linux. Of course it was
+turned off and of course I tried to run `service postgresql start` with two
+wrong users (myself and postgres) before I Googled that I should probably run it
+as root, but all in all, it did not take me very long to set up the environment.
+
+My approach to the problem was as follows:
+
+1. [Generate a table consisting of inputs](day_03/00_init.sql) - one row per
+   wire per test case
+2. Split the wire on commas into an array
+3. Explode the array into multiple rows
+4. Parse the x and y deltas (stored as intermediary table
+   [exploded_input](day_03/10_explode.sql))
+5. Calculate the cumulative sum of x and y deltas for each wire
+6. Calculate the starting and ending positions of each wire segment
+   ([calculated_xy](day_03/20_calculate_x_y.sql))
+7. Join the first wire and the second wire
+8. Find where the wires intersect ([intersections](day_03/30_find_intersections.sql))
+9. Calculate the Manhattan distance
+10. Find the minimum distance ([part 1 solution](day_03/40_part1.sql))
+
+I didn't know the how to do the step 3 (explode) so I turned to my search engine
+of choice - [Ecosia](https://www.ecosia.org/), powered by Microsoft - and the
+results started giving me a small panic attack that it might not go as planned.
+The first result was a fairly [useless documentation
+entry](https://www.w3resource.com/PostgreSQL/split_part-function.php) for the
+`SPLIT_PART()` function where explode isn't even mentioned on the page. The
+second result was a more relevant [thread from
+2001.](https://www.postgresql.org/message-id/00e401c12a4c$054036a0$279c10ac@INTERNAL)
+saying that it is not possible... I then had to turn to Google to learn about
+`unnest ... WITH ORDINALITY`. However, after that part, it was mostly smooth
+sailing and things went as planned.
+
+Thankfully for me, [part 2](day_03/45_part2.sql) just required fairly simple
+modifications to the intermediary tables I created along the way to keep the
+track of the total wire length so far.
