@@ -9,6 +9,7 @@ Table of contents:
   - [Day 1 - Erlang](#day-1---erlang)
   - [Day 2 - OCaml](#day-2---ocaml)
   - [Day 3 - SQL](#day-3---sql)
+  - [Day 4 - Excel](#day-4---excel)
 
 ## Day 1 - Erlang
 
@@ -106,3 +107,34 @@ to be purely horizontal or purely vertical intersections.
 Thankfully [part 2](day_03/45_part2.sql) just required fairly simple
 modifications to the intermediary tables I created along the way to keep the
 track of the total wire length so far.
+
+## Day 4 - Excel
+
+One of the other non-standard "programming languages" that I have on my list to
+use during this advent of code is Excel. Microsoft Excel needs no introduction
+as I believe most of the World is already acquainted with it. When I read the
+problem today I got really giddy because the first part of the problem has a
+fairly straightforward solution in a spread-sheeting system. Nevertheless, I
+still couldn't be fully sure about the second part of the exercise but I decided
+I liked the odds.
+
+Because the numbers were fairly limited in size, a generating solution where you
+try all of the numbers in the range would work in a reasonable amount of time.
+Therefore, my approach for the problem was to create a list of all numbers in
+the range and check if they fit the criteria. It turns out the hardest part was
+to figure out how to solve generate that list without "dragging" the cells for
+an hour, but a bit of Googling revealed that I should use the Fill > Series tool
+from the Home ribbon.
+
+To solve the first part, I split the checks into two (are the digits
+non-decreasing and are there at least two consecutive equal digits). Those
+columns were combined with a simple multiplication, and the result was the sum
+of those columns.
+
+To make my life a bit easier in the second part, I separated the digits into
+individual columns. The second check was reworked into a check wether exactly
+two consecutive digits are the same.
+
+Enjoy the [40+ MB spreadsheet](day_04/Solution.xlsx) if you are interested for
+the actual implementation of the solution. Column D holds the solution to the
+first part, and Column L for the second part.
