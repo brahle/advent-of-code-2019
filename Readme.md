@@ -103,6 +103,6 @@ saying that it is not possible... I then had to turn to Google to learn about
 planned from that point on. Oh, and I YOLOed the fact that there were not going
 to be purely horizontal or purely vertical intersections.
 
-Thankfully for me, [part 2](day_03/45_part2.sql) just required fairly simple
+Thankfully [part 2](day_03/45_part2.sql) just required fairly simple
 modifications to the intermediary tables I created along the way to keep the
 track of the total wire length so far.
