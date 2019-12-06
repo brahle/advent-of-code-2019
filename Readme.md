@@ -142,14 +142,101 @@ first part, and Column L for the second part.
 
 ## Day 5 - Bash
 
-Having read the problem today, I immediately recalled the words of some Advent
-of Code veterans that I will have to re-implement the Intcode machine over and
-over in each new language. For this iteration, I've decided to try and use bash,
-if for no other reason than to refresh my all but forgotten knowledge of using
-arrays.
+Having read the problem today, I immediately recalled the words of certain
+Advent of Code veterans that I will have to re-implement the Intcode machine
+over and over in each new language. For this iteration, I've decided to try and
+use bash, if for no other reason than to refresh my all but forgotten knowledge
+of using arrays.
 
 First thing's first, I need to split the string into an array, and it looks like
 using `IFS=',' read ...` will do the trick. Things soon turned into a nightmare
-as the syntax for working with arrays is actually exceptionally ugly in bash.
-Another problem is a serious lack of syntax checks, which makes it so very
-difficult to figure out where the problem is.
+as the syntax for working with arrays is exceptionally ugly in bash. Another
+problem is bash being really friendly towards "malformed" variable use because
+it will interpret a variable with a missing `$` as a string and `$arr[0]` as
+`"${arr[0]}[0]"`...
+
+After a fairly long slog of about an hour, I was able to finally get the first
+part to work correctly. I thought part 2 was now going to be a piece of cake,
+but boy was I wrong. The new opcodes weren't that difficult to implement,
+however, there were a few nuances about when to use the immediate mode and when
+the positional. I had to go through all of the examples to figure it out fully.
+
+After about 20 minutes of work on the second problem, my code was working for
+all small examples from the input. I ran it on the actual input, got a solution,
+submit it and... Wrong answer.
+
+Hm, that was weird. I must have had a bug somewhere... I spot an instance where
+I used `resolve` for the parameters and I really shouldn't have done so. I ran
+the program again, I get `751309` this time, I submit that... And I get another
+wrong answer.
+
+I ran my program on the all of the inputs again. This takes a few minutes in
+each iteration as my input was partially via an exported variable in a different
+file and partially via keyboard. To my astonishment, I find nothing wrong with
+it. I keep adding more and more debugging output to make sure everything is
+working fine. The answer I get is still `751309`.
+
+I spent the next 2 hours staring at the code, the outputs and everything, being
+unable to find the bug. Defeated and it being already past noon, I had to go to
+work. On the underground, I read through the detailed debugging transcript of
+the program, trying to follow it manually and hoping to stumble into the
+problem. That was to no avail, as all of the outputs appeared correct. The
+answer from my program is still `751309`.
+
+At work, I kicked off a few large data transformations, and while I was waiting
+for them to finish, I decided to refactor the code so that it will be easier to
+test it. I switched to reading everything from standard input and wrote a helper
+shell script, [test.sh](day_05/test.sh), that runs one test and compares it to
+the expected output. I also wrote another shell script that runs all tests in
+one single go, [test.all.sh](day_05/test.all.sh). All of the small tests passed
+and then I finally added a failing test - for the last example where I don't
+actually know the expected output. I ran it just to see it fail, contemplating
+my miserable existence, my hate for the number `751309` and what to do next. As
+I glanced over the output of the test case,
+
+```
+Files test/test.22.out and out differ
+EXPECTED:
+OUTPUT: XXXXX
+DONE 314
+
+GOT:
+OUTPUT: 742621
+DONE 314
+```
+
+I realized one thing - the output was't `751309` any more - it was `742621`!
+Without investigating further, I submitted the new solution and started
+celebrating my new gold star.
+
+After a joyous few seconds have passed, the adrenaline rush subsided, I had one
+thing left to do - figure out what has changed between this run and previous
+runs. Since I did not touch the code - the only thing that changed was the
+input. I compare the "new" input from the file with the input from the script
+and, sure enough, they differ - the input in the script is missing a "6" at the
+end. I failed at copy-paste. Palm, meet face. Face, meet palm. I wasted 2 hours
+at the minimum, and probably closer to 3, of my life debugging such a small
+mistake.
+
+At the very least, I have learned a lot today, namely:
+
+1. Don't blindly trust copy-paste. I will save the data to an input file instead
+   from now on.
+2. Bash, although it can handle working with arrays, really isn't designed for
+   that. Besides re-learning how to use them, I also recalled why I had
+   forgotten it.
+3. Bash lacks strong typing, and will handle a lot of typos in the
+   code silently. That makes it hard to build complex software in it. I'm really
+   glad I won't have to solve other problems in it this year.
+4. I totally forgot about `set -eux` - had I remembered it, I would have solved
+   the problem slightly differently (i.e. not used return values to move the
+   position pointer). I would have also solved it probably a bit quicker as some
+   of the the errors would become apparent earlier.
+5. Have a good and organized test suite for Intcode. I think this will be of
+   huge importance for the coming challenges, especially as I will have to
+   re-implement it each time.
+6. Do not rely on keyboard input (d'oh) to the programs and automate it if
+   possible. I wasted a large amount of time because I was manually typing the
+   values for opcode 3. Once I modified the input to my program so that it reads
+   both the intcode operations and the inputs from the standard input, running
+   tests became very simple and quick. It really did pay off.

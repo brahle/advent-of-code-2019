@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 IFS=',' read -r -a DATA
 
