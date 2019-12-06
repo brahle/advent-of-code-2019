@@ -12,7 +12,8 @@ function immediate {
 
 function resolve {
     arr=(0 100 1000 10000)
-    type=$(($1 / ${arr[$2]} % 10))
+    op=${DATA[$1]}
+    type=$(($op / ${arr[$2]} % 10))
     if [ $type -eq 0 ]
     then
         position $3
@@ -23,15 +24,12 @@ function resolve {
 
 function opcode_1 {
     idx=$1
-    op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $op 1 ${DATA[$p1]})
-    # echo "P1=$p1 says ${DATA[$p1]}; resolves to $param_1"
+    param_1=$(resolve $idx 1 ${DATA[$p1]})
 
     p2=$(($idx + 2))
-    param_2=$(resolve $op 2 ${DATA[$p2]})
-    # echo "P2=$p2 says ${DATA[$p2]}; resolves to $param_2"
+    param_2=$(resolve $idx 2 ${DATA[$p2]})
 
     p3=$(($idx + 3))
     param_3=${DATA[$p3]}
@@ -44,13 +42,12 @@ function opcode_1 {
 
 function opcode_2 {
     idx=$1
-    op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $op 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1 ${DATA[$p1]})
 
     p2=$(($idx + 2))
-    param_2=$(resolve $op 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2 ${DATA[$p2]})
 
     p3=$(($idx + 3))
     param_3=${DATA[$p3]}
@@ -80,7 +77,7 @@ function opcode_4 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $op 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1 ${DATA[$p1]})
 
     echo "Operation: ${DATA[$idx]} ${DATA[$p1]} ($param_1)"
     echo "OUTPUT: $param_1"
@@ -92,10 +89,10 @@ function opcode_5 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $op 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1 ${DATA[$p1]})
 
     p2=$(($idx + 2))
-    param_2=$(resolve $op 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2 ${DATA[$p2]})
 
     echo "Operation: ${DATA[$idx]} ${DATA[$p1]} ($param_1) ${DATA[$p2]} ($param_2)"
     if [ $param_1 -ne 0 ]
@@ -114,10 +111,10 @@ function opcode_6 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $op 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1 ${DATA[$p1]})
 
     p2=$(($idx + 2))
-    param_2=$(resolve $op 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2 ${DATA[$p2]})
 
     echo "Operation: ${DATA[$idx]} ${DATA[$p1]} ($param_1) ${DATA[$p2]} ($param_2)"
     if [ $param_1 -eq 0 ]
@@ -136,13 +133,12 @@ function opcode_7 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $op 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1 ${DATA[$p1]})
 
     p2=$(($idx + 2))
-    param_2=$(resolve $op 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2 ${DATA[$p2]})
 
     p3=$(($idx + 3))
-    # param_3=$(resolve $op 3 ${DATA[$p3]})
     param_3=${DATA[$p3]}
 
     echo "Operation: ${DATA[$idx]} ${DATA[$p1]} ($param_1) ${DATA[$p2]} ($param_2) ${DATA[$p3]} ($param_3)"
@@ -163,13 +159,12 @@ function opcode_8 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $op 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1 ${DATA[$p1]})
 
     p2=$(($idx + 2))
-    param_2=$(resolve $op 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2 ${DATA[$p2]})
 
     p3=$(($idx + 3))
-    # param_3=$(resolve $op 3 ${DATA[$p3]})
     param_3=${DATA[$p3]}
 
     echo "Operation: ${DATA[$idx]} ${DATA[$p1]} ($param_1) ${DATA[$p2]} ($param_2) ${DATA[$p3]} ($param_3)"
@@ -192,42 +187,24 @@ function opcode_99 {
 
 pos=0
 
-
 while true
 do
     op=${DATA[$pos]}
     operation=$(($op % 100))
-    echo "*******"
+    echo "************************************************"
     echo "On position $pos, operation is $op [$operation]"
     case $operation in
-        1)
-            opcode_1 $pos
-            pos=$(($pos + $?));;
-        2)
-            opcode_2 $pos
-            pos=$(($pos + $?));;
-        3)
-            opcode_3 $pos
-            pos=$(($pos + $?));;
-        4)
-            opcode_4 $pos
-            pos=$(($pos + $?));;
-        5)
-            opcode_5 $pos
-            pos=$(($pos + $?));;
-        6)
-            opcode_6 $pos
-            pos=$(($pos + $?));;
-        7)
-            opcode_7 $pos
-            pos=$(($pos + $?));;
-        8)
-            opcode_8 $pos
-            pos=$(($pos + $?));;
-        99)
-            opcode_99 $pos
-            pos=$(($pos + $?));;
+        1) opcode_1 $pos;;
+        2) opcode_2 $pos;;
+        3) opcode_3 $pos;;
+        4) opcode_4 $pos;;
+        5) opcode_5 $pos;;
+        6) opcode_6 $pos;;
+        7) opcode_7 $pos;;
+        8) opcode_8 $pos;;
+        99) opcode_99 $pos;;
     esac
+    pos=$(($pos + $?))
     for x in ${DATA[@]}; do
         echo -n "$x,"
     done

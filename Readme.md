@@ -10,6 +10,7 @@ Table of contents:
   - [Day 2 - OCaml](#day-2---ocaml)
   - [Day 3 - SQL](#day-3---sql)
   - [Day 4 - Excel](#day-4---excel)
+  - [Day 5 - Bash](#day-5---bash)
 
 ## Day 1 - Erlang
 
@@ -138,3 +139,17 @@ two consecutive digits are the same.
 Enjoy the [40+ MB spreadsheet](day_04/Solution.xlsx) if you are interested for
 the actual implementation of the solution. Column D holds the solution to the
 first part, and Column L for the second part.
+
+## Day 5 - Bash
+
+Having read the problem today, I immediately recalled the words of some Advent
+of Code veterans that I will have to re-implement the Intcode machine over and
+over in each new language. For this iteration, I've decided to try and use bash,
+if for no other reason than to refresh my all but forgotten knowledge of using
+arrays.
+
+First thing's first, I need to split the string into an array, and it looks like
+using `IFS=',' read ...` will do the trick. Things soon turned into a nightmare
+as the syntax for working with arrays is actually exceptionally ugly in bash.
+Another problem is a serious lack of syntax checks, which makes it so very
+difficult to figure out where the problem is.
