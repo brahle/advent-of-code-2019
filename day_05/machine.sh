@@ -13,12 +13,13 @@ function immediate {
 function resolve {
     arr=(0 100 1000 10000)
     op=${DATA[$1]}
+    pos=$(($1 + $2))
     type=$(($op / ${arr[$2]} % 10))
     if [ $type -eq 0 ]
     then
-        position $3
+        position ${DATA[$pos]}
     else
-        immediate $3
+        immediate ${DATA[$pos]}
     fi
 }
 
@@ -26,10 +27,10 @@ function opcode_1 {
     idx=$1
 
     p1=$(($idx + 1))
-    param_1=$(resolve $idx 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1)
 
     p2=$(($idx + 2))
-    param_2=$(resolve $idx 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2)
 
     p3=$(($idx + 3))
     param_3=${DATA[$p3]}
@@ -44,10 +45,10 @@ function opcode_2 {
     idx=$1
 
     p1=$(($idx + 1))
-    param_1=$(resolve $idx 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1)
 
     p2=$(($idx + 2))
-    param_2=$(resolve $idx 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2)
 
     p3=$(($idx + 3))
     param_3=${DATA[$p3]}
@@ -77,7 +78,7 @@ function opcode_4 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $idx 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1)
 
     echo "Operation: ${DATA[$idx]} ${DATA[$p1]} ($param_1)"
     echo "OUTPUT: $param_1"
@@ -89,10 +90,10 @@ function opcode_5 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $idx 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1)
 
     p2=$(($idx + 2))
-    param_2=$(resolve $idx 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2)
 
     echo "Operation: ${DATA[$idx]} ${DATA[$p1]} ($param_1) ${DATA[$p2]} ($param_2)"
     if [ $param_1 -ne 0 ]
@@ -111,10 +112,10 @@ function opcode_6 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $idx 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1)
 
     p2=$(($idx + 2))
-    param_2=$(resolve $idx 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2)
 
     echo "Operation: ${DATA[$idx]} ${DATA[$p1]} ($param_1) ${DATA[$p2]} ($param_2)"
     if [ $param_1 -eq 0 ]
@@ -133,10 +134,10 @@ function opcode_7 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $idx 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1)
 
     p2=$(($idx + 2))
-    param_2=$(resolve $idx 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2)
 
     p3=$(($idx + 3))
     param_3=${DATA[$p3]}
@@ -159,10 +160,10 @@ function opcode_8 {
     op=${DATA[$idx]}
 
     p1=$(($idx + 1))
-    param_1=$(resolve $idx 1 ${DATA[$p1]})
+    param_1=$(resolve $idx 1)
 
     p2=$(($idx + 2))
-    param_2=$(resolve $idx 2 ${DATA[$p2]})
+    param_2=$(resolve $idx 2)
 
     p3=$(($idx + 3))
     param_3=${DATA[$p3]}
