@@ -11,7 +11,7 @@ Table of contents:
   - [Day 3 - SQL](#day-3---sql)
   - [Day 4 - Excel](#day-4---excel)
   - [Day 5 - Bash](#day-5---bash)
-  - [Day 06 - D](#day-06---d)
+  - [Day 6 - D](#day-6---d)
 
 ## Day 1 - Erlang
 
@@ -247,7 +247,7 @@ At the very least, I have learned a lot today, namely:
    both the intcode operations and the inputs from the standard input, running
    tests became very simple and quick. It really did pay off.
 
-## Day 06 - D
+## Day 6 - D
 
 Dear diary, today is a great day. I've read today's problem gave it a bit of
 thought and decided to use a real programming language for a change. One of the
