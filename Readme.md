@@ -11,6 +11,7 @@ Table of contents:
   - [Day 3 - SQL](#day-3---sql)
   - [Day 4 - Excel](#day-4---excel)
   - [Day 5 - Bash](#day-5---bash)
+  - [Day 06 - D](#day-06---d)
 
 ## Day 1 - Erlang
 
@@ -210,7 +211,7 @@ OUTPUT: 742621
 DONE 314
 ```
 
-I realized one thing - the output was't `751309` any more - it was `742621`!
+I realized one thing - the output wasn't `751309` any more - it was `742621`!
 Without investigating further, I submitted the new solution and started
 celebrating my new gold star. You can read my code [here](day_05/machine.sh).
 
@@ -245,3 +246,31 @@ At the very least, I have learned a lot today, namely:
    values for opcode 3. Once I modified the input to my program so that it reads
    both the intcode operations and the inputs from the standard input, running
    tests became very simple and quick. It really did pay off.
+
+## Day 06 - D
+
+Dear diary, today is a great day. I've read today's problem gave it a bit of
+thought and decided to use a real programming language for a change. One of the
+languages that I always wanted to try is D, so I installed the
+[DMD](https://dlang.org/download.html) compiler and got cracking.
+
+For the first problem, I planned on doing a topological sort of the input. That
+I saved to a file. Reading the file was a fairly simple endeavor, but parsing it
+was much harder than I anticipated. D compiler produced errors that I had some
+trouble parsing, and I wasted about an hour fighting the associative array
+(otherwise know as map or dictionary) declaration. I used `string[string[]]`
+instead of the `string[][string]` to represent what would be a `map<string,
+vector<string>>` in C++. I have to say that I am not a huge fan of that form of
+template typing - I prefer the longer but easier to understand form of C++ and
+Java.
+
+After my struggles with the compiler were done, the algorithm itself for [part
+1](day_06/part1.d) was fairly simple. [Part 2](day_06/part2.d) was a basic BFS
+that took me just a few minutes to implement.
+
+Overall, while D seems like a powerful language, searching for the documentation
+and examples was hard. I also am not sure what the complexity involved when
+using the associative arrays are, but I would assume it is implemented as a hash
+map. What I found really interesting is the fact that the compiler error
+messages do not seem to be that much better than C++ - but at least for the most
+part, they fit on the screen.
