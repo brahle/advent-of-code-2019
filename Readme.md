@@ -207,7 +207,7 @@ DONE 314
 
 I realized one thing - the output was't `751309` any more - it was `742621`!
 Without investigating further, I submitted the new solution and started
-celebrating my new gold star.
+celebrating my new gold star. You can read my code [here](day_05/machine.sh).
 
 After a joyous few seconds have passed, the adrenaline rush subsided, I had one
 thing left to do - figure out what has changed between this run and previous
