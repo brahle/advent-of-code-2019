@@ -155,15 +155,16 @@ problem is bash being really friendly towards "malformed" variable use because
 it will interpret a variable with a missing `$` as a string and `$arr[0]` as
 `"${arr[0]}[0]"`...
 
-After a fairly long slog of about an hour, I was able to finally get the first
+After a fairly long slog, about an hour, I was able to finally get the first
 part to work correctly. I thought part 2 was now going to be a piece of cake,
 but boy was I wrong. The new opcodes weren't that difficult to implement,
 however, there were a few nuances about when to use the immediate mode and when
 the positional. I had to go through all of the examples to figure it out fully.
 
 After about 20 minutes of work on the second problem, my code was working for
-all small examples from the input. I ran it on the actual input, got a solution,
-submit it and... Wrong answer.
+all of the test examples from the input to both todays task and the day 2
+challenge. I ran my solution on the actual input, got a solution, submitted it
+and... Wrong answer.
 
 Hm, that was weird. I must have had a bug somewhere... I spot an instance where
 I used `resolve` for the parameters and I really shouldn't have done so. I ran
@@ -174,25 +175,29 @@ I ran my program on the all of the inputs again. This takes a few minutes in
 each iteration as my input was partially via an exported variable in a different
 file and partially via keyboard. To my astonishment, I find nothing wrong with
 it. I keep adding more and more debugging output to make sure everything is
-working fine. The answer I get is still `751309`.
+working fine. The answer I get is still `751309`. Maybe I copied it wrong the
+first time around so I try again and, no, this wasn't the problem. `751309` is
+not the expected answer.
 
-I spent the next 2 hours staring at the code, the outputs and everything, being
-unable to find the bug. Defeated and it being already past noon, I had to go to
-work. On the underground, I read through the detailed debugging transcript of
-the program, trying to follow it manually and hoping to stumble into the
-problem. That was to no avail, as all of the outputs appeared correct. The
-answer from my program is still `751309`.
+I spent the next 2 hours staring at the code, the ever increasing mountain of
+the debugging output, and the problem statement, being unable to find the bug.
+Defeated and it being already past noon, I had to go to work. While I was on the
+underground, I read through the detailed debugging transcript of the program,
+trying to follow it manually and hoping to stumble into the problem. That was to
+no avail, as all of the outputs appeared correct. The answer from my program is
+still `751309`.
 
-At work, I kicked off a few large data transformations, and while I was waiting
-for them to finish, I decided to refactor the code so that it will be easier to
-test it. I switched to reading everything from standard input and wrote a helper
-shell script, [test.sh](day_05/test.sh), that runs one test and compares it to
-the expected output. I also wrote another shell script that runs all tests in
-one single go, [test.all.sh](day_05/test.all.sh). All of the small tests passed
-and then I finally added a failing test - for the last example where I don't
-actually know the expected output. I ran it just to see it fail, contemplating
-my miserable existence, my hate for the number `751309` and what to do next. As
-I glanced over the output of the test case,
+At work, I kicked off a few large data transformations, and during the time I
+was waiting for them to finish, I decided to refactor the code so that it will
+be easier to test it. I switched to reading everything from standard input and
+wrote a helper shell script that runs one test and compares it to the expected
+output ([test.sh](day_05/test.sh)). I also wrote another shell script that runs
+all tests in one single go ([test.all.sh](day_05/test.all.sh)). All of the small
+tests passed and then I finally added a failing test, for the final input to
+part 2, where I didn't actually know what the expected output was. I ran it just
+to see it fail, all the while contemplating my miserable existence, my hate for
+the number `751309` and what I am planning to do next. As I glanced over the
+output of the test case,
 
 ```
 Files test/test.22.out and out differ
@@ -209,14 +214,14 @@ I realized one thing - the output was't `751309` any more - it was `742621`!
 Without investigating further, I submitted the new solution and started
 celebrating my new gold star. You can read my code [here](day_05/machine.sh).
 
-After a joyous few seconds have passed, the adrenaline rush subsided, I had one
-thing left to do - figure out what has changed between this run and previous
+After a joyous few seconds have passed and the adrenaline rush subsided, I had
+one thing left to do - figure out what has changed between this run and previous
 runs. Since I did not touch the code - the only thing that changed was the
-input. I compare the "new" input from the file with the input from the script
-and, sure enough, they differ - the input in the script is missing a "6" at the
-end. I failed at copy-paste. Palm, meet face. Face, meet palm. I wasted 2 hours
-at the minimum, and probably closer to 3, of my life debugging such a small
-mistake.
+input. I compared the "new" input from the file with the input from the script
+and, sure enough, they did differ - the input in the script was missing a "6" at
+the end. I failed at copy-paste. Palm, meet face. Face, meet palm. I wasted 2
+hours at the minimum, and probably closer to 3, of my life debugging such a
+small mistake.
 
 At the very least, I have learned a lot today, namely:
 
