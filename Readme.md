@@ -12,6 +12,8 @@ Table of contents:
   - [Day 4 - Excel](#day-4---excel)
   - [Day 5 - Bash](#day-5---bash)
   - [Day 6 - D](#day-6---d)
+  - [Day 7 - Haskell](#day-7---haskell)
+  - [Day 8 - Scratch](#day-8---scratch)
 
 ## Day 1 - Erlang
 
@@ -337,7 +339,7 @@ Overall, I am happy with this "day" - I feel like I learnt a lot. I now can sort
 of read and write some Haskell code. My implementation is not the most efficient
 and I'm just glad that performance wasn't necessary.
 
-# Day 8 - Scratch
+## Day 8 - Scratch
 
 After reading today's problem, I decided to take another risk and try and solve
 this problem using the
