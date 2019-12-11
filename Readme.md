@@ -274,3 +274,85 @@ using the associative arrays are, but I would assume it is implemented as a hash
 map. What I found really interesting is the fact that the compiler error
 messages do not seem to be that much better than C++ - but at least for the most
 part, they fit on the screen.
+
+## Day 7 - Haskell
+
+Another day, another intcode, another new language. This time, the choice fell
+on [Haskell](https://en.wikipedia.org/wiki/Haskell_%28programming_language%29).
+Why Haskell? Because a colleague at work has been raving on how Haskell is the
+perfect choice for implementing the intcode interpreter. It took me three days
+to finish writing this solution, mostly because of some obligations I had in
+real life that meant I didn't have the time for advent of code. That does not
+mean that you will be spared of complaints.
+
+The main reason why I couldn't finish writing my solution in one sitting is
+because I simply didn't know Haskell. It's syntax is far less forgiving than the
+other langauges I used, pretty much the opposite of bash in which I implemented
+my last intcode interpreter. What I discovered was that Haskell really has a
+completely different paradigm than any other programming language I've used
+before.
+
+The most annoying thing about Haskell comes when you turn to Ecosia (or Google)
+to figure something out. You usually are able to find a lost soul asking exactly
+what you want, praise the good fortune that their question has an answer but
+then read said answer where some prick with a hollier-than-though attitude asks
+the question author what they "really mean" because obviously the question makes
+no sense to ask in Haskell as Haskell wasn't designed to answer it. The expert
+then helpfully proceeds to explain a solution tangential to the problem using
+overly complex nomenclature so you have to spend the next 20 minutes Googling
+what those terms mean and hoping that you can re-forumlate your question so that
+you can re-use that solution. Frustrated, me? No way, where did you get that
+idea?
+
+In terms of the actual code I had to write, one of the biggest challenges was
+the use of monads (monoids in the category of endofunctors) to handle the input
+and output. I've never seen a programming language so determined to prevent any
+interaction between the program and the user. In total, I believe I've spent
+about four hours just trying to get the input, output and some debugging
+going...
+
+Another part of the struggle was figuring out how to send "objects" around
+instead of having to send a quadrillion argument to each function, but I managed
+to figure it out by "reading the fucking manual". Which brings me to my next
+point - the documentation is pretty good, and the biggest flaw it has is that is
+also really verbose which made finding specific tidbits of knowledge hard.
+
+Re-implementing the [machine](day_07/Machine.hs) for the third time was much
+easier than the previous two times because I had a test suite from before. I
+made only one bug that persisted through the annoyingily nitpicky (but in a good
+way) Haskell compiler, which the tests caught very easily. The solution to
+[part 1](day_07/Part1.hs) was fairly simple and direct - I just take the output
+of the machine and pass it around.
+
+[Part 2](day_07/Part2.hs), however, gave me much more trouble, again mostly
+because I don't know Haskell. I wanted to implement the feedback loop using
+generating functions `() -> Int` that would read/write to lists that all of the
+machines have access to, but after about an hour or two of trying I am
+embarassed to admit that I failed to write even a generating function that would
+return different values on each subsequent call... I ended up settling on
+re-writing the `evaluate` function in such a way that it knows of multiple
+machines and proceeds to evaulate the next one when opcode 3 is received.
+
+Overall, I am happy with this "day" - I feel like I learnt a lot. I now can sort
+of read and write some Haskell code. My implementation is not the most efficient
+and I'm just glad that performance wasn't necessary.
+
+# Day 8 - Scratch
+
+After reading today's problem, I decided to take another risk and try and solve
+this problem using the
+[Scratch](https://en.wikipedia.org/wiki/Scratch_%28programming_language%29)
+programming language. I had a pretty good idea how to solve the first part, but
+I did not know what to expect in the second part.
+
+My approach was fairly straightforward for both parts. The solutions cannot be
+found in the repository, however, they are only available online:
+[Part 1](https://scratch.mit.edu/projects/352349465) and
+[Part 2](https://scratch.mit.edu/projects/352353880/). For part 2, I exported
+the output to a file, and then reformatted it in the textual document to make
+the output readable.
+
+Contrary to what you might believe, this problem required me to invest least
+amount of time compared to any other so far. Scratch is just an easy and
+straightforward programming langauge and is powerful enough to solve problems
+like these without much sweat.

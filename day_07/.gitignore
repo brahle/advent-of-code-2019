@@ -1,3 +1,5 @@
 Machine
-Machine.hi
-Machine.o
+Part1
+Part2
+*.hi
+*.o
