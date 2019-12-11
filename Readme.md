@@ -14,6 +14,7 @@ Table of contents:
   - [Day 6 - D](#day-6---d)
   - [Day 7 - Haskell](#day-7---haskell)
   - [Day 8 - Scratch](#day-8---scratch)
+  - [Day 9 - C](#day-9---c)
 
 ## Day 1 - Erlang
 
@@ -358,3 +359,25 @@ Contrary to what you might believe, this problem required me to invest least
 amount of time compared to any other so far. Scratch is just an easy and
 straightforward programming langauge and is powerful enough to solve problems
 like these without much sweat.
+
+## Day 9 - C#
+
+After being burnt and wasting a lot of time on IntCode re-implementations since
+the start of the Advent of Code, I decided to treat it seriously this time. I
+used C# for this iteration of it. C# is a language that I'm fairly familiar
+with, while not being proficient since it's been a very long since we've crossed
+paths the last time.
+
+This was the right choice. Not only does C# have full support for the big
+integers (which I'm not sure if they were really necessary), using object
+oriented programming made the implementation of the original Machine trivial.
+The one bug I had in the implementation was that I fogot to implement the new
+relative writes. I probably should have restructed the helper functions to be a
+bit nicer, but [this implementation](day_09/Day09/Day09/Machine.cs) did the
+trick.
+
+Overall, this was a fairly straightforward implementation, although I
+overcomplicated it a bit, e.g. by having the operation 4 (write out) call a
+callback instead of just writing out the value directly. The one thing I dislike
+about C# is the fact that the default code style is inefficient in terms of new
+lines - both the open and the closing brackets are on their own line.
