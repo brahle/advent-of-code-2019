@@ -14,7 +14,7 @@ Table of contents:
   - [Day 6 - D](#day-6---d)
   - [Day 7 - Haskell](#day-7---haskell)
   - [Day 8 - Scratch](#day-8---scratch)
-  - [Day 9 - C](#day-9---c)
+  - [Day 9 - C#](#day-9---c)
 
 ## Day 1 - Erlang
 
@@ -381,3 +381,34 @@ overcomplicated it a bit, e.g. by having the operation 4 (write out) call a
 callback instead of just writing out the value directly. The one thing I dislike
 about C# is the fact that the default code style is inefficient in terms of new
 lines - both the open and the closing brackets are on their own line.
+
+## Day 10 - Ruby
+
+I had to take a pause for a few days because I was busy with work, travel,
+company holiday parties... Anyway, there still are 8 languages whose knowledge
+I'd describe as suspect at best, so for the problems that seem to be one off
+they will have to make do. Problem for day 10 appears to fall into this
+category.
+
+Ruby is the language of my choice for this, for no particular reason whatsoever.
+For the first part of the problem, I will implement a fairly slow
+`O(N^2 M^2 (log(N) + log(M)))` (where `N x M` is the dimension of the board)
+algorithm that will count the number of visible asteroids for every position. My
+plan is to afix the root to an asteroid, find the (x,y) distance for every other
+asteroid, normalize the angle by finding the (x/gcd(x,y), y/gcd(x,y)) and
+counting how many different angles are found. I had an off by one error because
+I forgot to ignore the central asteroid.
+
+Part 2 was significantly more complicated. My approach to solve the problem
+involve a few steps. First, we find all of the asteroids on the same angle.
+Within the same angle, we sort them by their distance to get the to different
+"cycles" in which they will be destroyed. Finally, we sort all of the asteroids,
+first by their cycle, then by their angle.
+
+That was all well and good, but it took me about 2 hours(!) to figure out all of
+the details both intrinsic to the task at hand, like the orientation of the
+coordinate system in the input, how does that orientation work with the inital
+laser and the computational geometry required to solve the problem.
+
+As for my language choice, I'd say Ruby was a very cooperative language and has
+not been a detriment in solving the puzzle.
