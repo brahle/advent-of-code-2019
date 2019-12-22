@@ -16,6 +16,8 @@ Table of contents:
   - [Day 8 - Scratch](#day-8---scratch)
   - [Day 9 - C#](#day-9---c)
   - [Day 10 - Ruby](#day-10---Ruby)
+  - [Day 11 - Scala](#day-10---Scala)
+  - [Day 12 - Perl](#day-12---Perl)
 
 ## Day 1 - Erlang
 
@@ -450,3 +452,21 @@ out that I made two errors. I swapped the numbers for black and white colors and
 had the wrong order for the write color and move order. In part 2, it was mostly
 about printing the board in a way that's readable.
 
+## Day 12 - Perl
+
+I felt like summonning Cthulhu today so I wrote the code in the good, old
+fashioned [Perl](https://www.perl.org/). I'd be lying if I said that the curious
+input format made me think of using regular expressions immediately, seeing as
+I'm used to the `scanf` familiy of input functions that can take care of it with
+ease. However, I couldn't justify not using them once I started to write the
+solution.
+
+Overall, [part 1](day_12/part1.pl) was mostly a boring "implement this" type of
+a problem. There's not much to note here, save for the fact that I ran into some
+issues when using the arrays.
+
+[Part 2](day_12/part2.pl), on the other hand, was a much more challenging
+problem. The key insight is that the cycles can be broken up individually for
+each of the three axis. The full cycle can then be found as the least common
+multiplier of the individual cycles. My code is really ugly, and I wasted some
+time fixing bugs that were introduced by poor copy-pasting.
