@@ -15,6 +15,7 @@ Table of contents:
   - [Day 7 - Haskell](#day-7---haskell)
   - [Day 8 - Scratch](#day-8---scratch)
   - [Day 9 - C#](#day-9---c)
+  - [Day 10 - Ruby](#day-10---Ruby)
 
 ## Day 1 - Erlang
 
@@ -390,14 +391,15 @@ I'd describe as suspect at best, so for the problems that seem to be one off
 they will have to make do. Problem for day 10 appears to fall into this
 category.
 
-Ruby is the language of my choice for this, for no particular reason whatsoever.
-For the first part of the problem, I will implement a fairly slow
-`O(N^2 M^2 (log(N) + log(M)))` (where `N x M` is the dimension of the board)
-algorithm that will count the number of visible asteroids for every position. My
-plan is to afix the root to an asteroid, find the (x,y) distance for every other
-asteroid, normalize the angle by finding the (x/gcd(x,y), y/gcd(x,y)) and
-counting how many different angles are found. I had an off by one error because
-I forgot to ignore the central asteroid.
+[Ruby](https://www.youtube.com/watch?v=qObzgUfCl28) was the language of my
+choice for this, for no particular reason whatsoever. For the first part of the
+problem, I will implement a fairly slow `O(N^2 M^2 (log(N) + log(M)))` (where
+`N x M` is the dimension of the board) algorithm that will count the number of
+visible asteroids for every position. My plan is to afix the root to an
+asteroid, find the (x,y) distance for every other asteroid, normalize the angle
+by finding the (x/gcd(x,y), y/gcd(x,y)) and counting how many different angles
+are found. I had an off by one error because I forgot to ignore the central
+asteroid.
 
 Part 2 was significantly more complicated. My approach to solve the problem
 involve a few steps. First, we find all of the asteroids on the same angle.
@@ -412,3 +414,39 @@ laser and the computational geometry required to solve the problem.
 
 As for my language choice, I'd say Ruby was a very cooperative language and has
 not been a detriment in solving the puzzle.
+
+# Day 11 - Scala
+
+Another day, another
+[intcode](day_11/src/com/brahle/adventofcode/year2019/IntMachine.scala). This
+time, I opted for a language that I don't typically use, but I know well enough
+to get by. Since it's based on a JVM, I thought that it will be a breeze to get
+it running on Ubuntu on Windows while using IntelliJ to build it. I
+unfortunately have to admit that I was wrong.
+
+While my solution for neither
+[part 1](day_11/src/com/brahle/adventofcode/year2019/Part1.scala) nor
+[part 2](day_11/src/com/brahle/adventofcode/year2019/Part2.scala) was
+particularaly nice, I really liked the power of having callbacks for input and
+output - they really make it simple to create interactions with the interpreter.
+
+As for the implementation, I initially tested my intcode solution only on the
+large example - and it worked fine on it. Then I implemented the solution to the
+problem, ran it on the input for day 11, and received a wrong answer. Obviously,
+at that point I decided to double check my intcode interpreter was actually
+correct so I decided to reuse the testing script from day 9. This is where
+things started going wrong, as I did not have Java installed on Ubuntu. How
+difficult can it be to install java? Well, to download it from Oracle you need
+to sign in to their website. I did not find a password for it in my password
+manager, so I went and created an account only to find that an account using my
+email already exists. Password reset then did the trick and I was finally able
+to download the JDK for Linux. It then took me about an hour to find the right
+magical incantation to run my program from the command line... A minute later, I
+ran the program on all of the test cases and found that IntCode did not have a
+bug.
+
+My attention then fully went to the "today's" part of the program and it turned
+out that I made two errors. I swapped the numbers for black and white colors and
+had the wrong order for the write color and move order. In part 2, it was mostly
+about printing the board in a way that's readable.
+
