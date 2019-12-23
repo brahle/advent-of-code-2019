@@ -470,3 +470,38 @@ problem. The key insight is that the cycles can be broken up individually for
 each of the three axis. The full cycle can then be found as the least common
 multiplier of the individual cycles. My code is really ugly, and I wasted some
 time fixing bugs that were introduced by poor copy-pasting.
+
+## Day 13 - Kotlin
+
+I kind of feel like every other day will be a new int code machine. This time, I
+opted for a language that I've never used before but shares a lot of
+similiraties with my last intcode attempt - Kotlin. It has the Java's
+`BigInteger` class which might not actually be necessary (I have a hunch that
+64-bit integers are all that's required) but it does make the implementation
+feel safer.
+
+The [IntMachine](day_13/src/IntMachine.kt) part of it was pretty much a carbon
+copy of the one from day 11. However, Scala does have a bit better support for
+the `BigInt` which made the implementation a tiny bit cleaner.
+
+[Part 1](day_13/src/Part1.kt) was really straightforward and fairly simple. I
+made a mistake when I counted all twos and not every third one, but that wasn't
+a big deal overall.
+
+[Part 2](day_13/src/Part2.kt) was a whole lot harder. I started with first
+creating a visualisation of the map to get an understanding of how the arcanoid
+game looks like. Next step was to simulate the game until the end and see how
+the ball behaves. I liked the fact that the first bounce off the paddle was done
+without having to move the paddle and showed that when ball is one row above,
+the paddle needs to be right underneath it.
+
+The approach I took to solve this problem was to create a secondary int machine
+to simulate the behaviour after bouncing the ball, see where the ball will fall
+and move my primary int machine's paddle to the appropriate X coordinate.
+Unfortunately, I was met with a curveball - if you move the paddle as the ball
+hits it, the balls direction changes. This mean that each time I'm about hit the
+ball, I had to test all three possiblities of moving the joystick and choose any
+that doesn't end in a game over. My code ended up being disguisting, but it did
+the trick... Save for the fact that there was apparently always at least one
+block that didn't get destroyed, but I didn't bother fixing that bug as I got
+the correct answer.
