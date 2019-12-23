@@ -18,6 +18,8 @@ Table of contents:
   - [Day 10 - Ruby](#day-10---Ruby)
   - [Day 11 - Scala](#day-10---Scala)
   - [Day 12 - Perl](#day-12---Perl)
+  - [Day 13 - Kotlin](#day-13---Kotlin)
+  - [Day 14 - Go](#day-14---Go)
 
 ## Day 1 - Erlang
 
@@ -505,3 +507,22 @@ that doesn't end in a game over. My code ended up being disguisting, but it did
 the trick... Save for the fact that there was apparently always at least one
 block that didn't get destroyed, but I didn't bother fixing that bug as I got
 the correct answer.
+
+## Day 14 - Go
+
+I've chosen to write today's solution in a programming lanuguage that I've used
+a couple of times, but I don't feel comfortable in. I tactically decided not to
+use it on an odd day (when you have to implement intcode). The part that I
+strugled with the most was reading and parsing the input, on the other hand the
+output experience was really enjoyable - go prints out all types in a sensible
+manner. Another thing I didn't like is how "raw" working with dynamic arrays (so
+called `slice`) feels - I guess it has its advantages when you need full
+control, but that must not be that common.
+
+The [first part](day_14/src/part1/part1.go) was a fairly straightforward problem
+after doing a topolgical sort starting from the FUEL.
+[Part two](day_14/src/part2/part2.go) was a bit more interesting. The key
+insight is that the number that we have to compute can be binary searched - i.e.
+if we can create X amount of fuel, we can also create X-1. The function to check
+if we can create X units of fuel is fairly simple we just need to change the
+starting condition from having to generate 1 unit of fuel to X.
