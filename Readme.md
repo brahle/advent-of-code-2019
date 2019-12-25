@@ -20,6 +20,8 @@ Table of contents:
   - [Day 12 - Perl](#day-12---Perl)
   - [Day 13 - Kotlin](#day-13---Kotlin)
   - [Day 14 - Go](#day-14---Go)
+  - [Day 15 - Rust](#day-15---Rust)
+  - [Day 16 - Fortran](#day-16---Fortran)
 
 ## Day 1 - Erlang
 
@@ -526,3 +528,79 @@ insight is that the number that we have to compute can be binary searched - i.e.
 if we can create X amount of fuel, we can also create X-1. The function to check
 if we can create X units of fuel is fairly simple we just need to change the
 starting condition from having to generate 1 unit of fuel to X.
+
+## Day 15 - Rust
+
+A few of my friends have been solving advent of code this year in
+[Rust](https://www.rust-lang.org/) so I decided to try my hand at implementing
+intcode in it. Another friend told me that 64 bit signed integers should be
+enough for the machine to work as expected. That made me believe that even a
+lack of a big integer library should not prevent me from being able to solve
+this problem.
+
+How did the implementation go? My god, did it take me a while to grok Rust... I
+kept running into problems over and over, the first big one was how to pass in a
+closure instead of a function so I had to learn more about traits and
+references. That was just the beginning, though, as the real problems started
+when I wanted to do a bit more complicated state mangling - borrow, mutable
+borrow, immutable borrow kept getting in the way. My first breakthrough happened
+when I read the
+[What is Ownership?](https://doc.rust-lang.org/stable/book/ch04-01-what-is-ownership.html)
+chapter in the Rust book. That was enough to have me finish the initial
+impelementation of the [intcode](day_15/intcode.rs) and the
+[testing program](day_15/classic.rs).
+
+As I started actually working on the soution for the
+[part one](day_15/part1.rs), it became clear that what knowledge I had about
+Rust was not enough to implement what I had envisioned. My idea for the solution
+was to move the robot in a DFS-like fashion with a simulated stack. The `State`
+was to be kept in the stack (really just a `Vec<State>`) and each time sending
+an input to the machine is needed, throw the current state and the next state on
+the stack. If everything was searched and the robot needs to move back, do not
+add anything to the stack. When the intcode machine retruns an output, check if
+the robot actually moved to the next position. If it did not, remove the last
+element from the stack. The problem here was that I needed to modify the same
+variables in multiple different places. Therefore, I had to learn about
+[`RefCell`](https://doc.rust-lang.org/stable/book/ch15-05-interior-mutability.html)
+which sort of feels like cheating and preventing Rust from doing what it's
+supposed to do. To find the solution was as easy as running a BFS at the end
+from the start to the end position.
+
+I had a few bugs in my implementation, but those were easily discovered as I
+added debugging logging.
+
+[Part two](day_15/part2.rs) after part 1 was a breeze, since all that was needed
+was to start the BFS at the end and return the maximal distance that the BFS
+found.
+
+I have to say that this was the most miserable experience since Haskell, judging
+by the amount of time I spent wrestling with the language compared to the amount
+of time it took me to come up with the solution for the problem. With how big of
+an investment it turned out to be, I'm kind of sad that I won't be doing more
+Rust. It reminds me of C/C++, but requires a very different mindset.
+
+## Day 16 - Fortran
+
+I've decided to try this legendary programming language because of all of the
+mythical tales surrounding it. The rumor has it that the programmers who know it
+are dying out, but the huge software projects written in it are still powering
+large swaths of the infrastructure the human race has become dependent on. Who
+knows, maybe learning this language might help with employment down the line...
+The first part of today's problem seemed like a fairly basic task that I thought
+fortran was mostly well suited to, so I decided to take the risk and implement
+my solution in it.
+
+One of the amusing problems I ran into was that the `gfortran` compiler that I
+used via `f95` decided the version of fortan based on the file extension.
+
+The biggest issue I had during my implementation in [part 1](day_16/part1.f90)
+was the fact that I did not know how to use dynamic strings. This meant I
+hardcoded some values so my code was ugly and hard to test.
+
+[Part 2](day_16/part2.f90), on the other hand, was a problem that required some
+thought. There were three observation that enabled me to solve this problem. The
+first was that no number before the index `i` will ever impact any index from
+`i` till the end. The second one was that for each index after the half way
+mark, you only need to calculate the sum of all of the elements until the end.
+Because my skip index was large, these two optimisations were more than enough.
+

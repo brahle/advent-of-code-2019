@@ -22,7 +22,7 @@ class IntMachine {
     constructor(other: IntMachine) {
         this.position = other.position
         this.relativeIndex = other.relativeIndex
-        this.memory = HashMap(other.memory)
+        this.memory = HashMap(other.memory) as MutableMap<BigInteger, BigInteger>
         this.inputs = ArrayDeque(other.inputs)
         this.input = other.input
         this.output = other.output
