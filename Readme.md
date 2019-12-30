@@ -22,6 +22,7 @@ Table of contents:
   - [Day 14 - Go](#day-14---Go)
   - [Day 15 - Rust](#day-15---Rust)
   - [Day 16 - Fortran](#day-16---Fortran)
+  - [Day 17 - PHP](#day-17---PHP)
 
 ## Day 1 - Erlang
 
@@ -604,3 +605,29 @@ first was that no number before the index `i` will ever impact any index from
 mark, you only need to calculate the sum of all of the elements until the end.
 Because my skip index was large, these two optimisations were more than enough.
 
+## Day 17 - PHP
+
+Another day, another intcode. This time, I decided again to use a language that
+I have a decent bit of experience with - PHP. This is the first language,
+besides SQL, that I used in my professional carreer. I used it, or more
+precisely, Hack, when I worked at Facebook. In reality I wanted to use Hack,
+however, I ran into issues with compiling it and using pre-compiled binaries on
+my platform (Windows and Ubuntu on Windows Subsystem for Linux) so that just
+wasted some of my time while I was trying to get it to work.
+
+Another timesink I ran into was in the
+[intcode implementation](day_17/intmachine.php), where I used
+`$this->$relativeIndex` instead of `$this->relativeIndex`. It took me a
+surprising amount of time to spot the mistake, even though I knew the mistake
+had to do with `relativeIndex` and it's mentioned a total of 4 times. One thing
+I forgot about PHP is the fact that you typically want to `use` variables with a
+`&` in the callback, and you must use it if you want to change them.
+
+The solution for [part 1](day_17/part1.php) was really straightforward. I first
+started with just printing out the board and later added the storing of the
+board and detection of the crossings.
+
+I feel like I cheated in [part 2](day_18/part2.php) because I found the path
+manually, but I did write some code to verify that the solution was correct
+before passing it into the final int machine. Another bug that crept here was
+the fact that I copy-pasted some code and re-used a variable I shouldn't have.
